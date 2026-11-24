@@ -7,6 +7,8 @@ and its light come in red, green or blue, chosen at order.
 It is the band of `manent-band` in another form: the same circuit, net for net, in a case
 made to be looked at. Firmware and radio protocol live in the `mnemo-band` repository.
 
+Public page: [manentlabs.it/en/pendant/](https://manentlabs.it/en/pendant/) (English), [manentlabs.it/pendente/](https://manentlabs.it/pendente/) (Italian).
+
 Nothing here has been built or measured. This is a first design on paper, checked by
 scripts, and several of its choices still wait for the project owner.
 
