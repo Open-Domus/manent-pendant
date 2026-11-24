@@ -38,13 +38,14 @@ parts:
     status: verified
     url: https://invensense.tdk.com/products/digital/t5838/
   button:
-    function: Tactile switch, pushed from the side through the rim
-    manufacturer: to choose
-    mpn: to choose
-    package: side-push SMD switch, about 3.5 x 2.9 mm
+    function: Tactile switch, pushed from the side through the rim; the card's part
+    manufacturer: Panasonic
+    mpn: EVQP7J01P
+    package: SMD side-push, 3.5 x 2.9, straight terminals, no boss
     size: [3.5, 2.9, 1.35]
-    status: unverified       # the size class of the small side-push switches; no part read yet
-    url: ""
+    actuator: 0.65           # the knob beyond the body
+    status: verified         # catalogue ANCTB21E 2025-07, read for manent-card
+    url: https://industry.panasonic.com/ac/cdn/e/control/switch/light-touch/catalog/sw_lt_eng_3529s_side.pdf
   led:
     function: Recording indicator
     manufacturer: Rohm
@@ -56,10 +57,10 @@ parts:
   xtal32m:
     function: 32 MHz crystal
     manufacturer: Kyocera
-    mpn: to choose
+    mpn: CX2016DB32000D0FLJCC
     package: "2016"
     size: [2.0, 1.6, 0.5]
-    status: unverified       # package from Nordic's QFN48 reference; part and height not chosen
+    status: secondary        # distributor listings: 8 pF, 10 ppm, 60 ohm, -30 to 85 C; the QFN48 reference asks 8 pF, 40 ppm in all. Height not read
     url: ""
   xtal32k:
     function: 32.768 kHz crystal
@@ -71,12 +72,20 @@ parts:
     url: ""
   inductor:
     function: Buck inductor, 2.2 uH
-    manufacturer: Murata
-    mpn: to choose
+    manufacturer: TDK
+    mpn: VLS201610HBX-2R2M-1
     package: "0806 (2016 metric)"
     size: [2.0, 1.6, 1.0]
-    status: unverified
-    url: ""
+    status: secondary        # distributor listings: 0.17 ohm max, 1.45 A, 1.00 max height; the part in Nordic's nPM1304 efficiency figure
+    url: https://product.tdk.com/system/files/dam/technicalsupport/tvcl/pdf/inductor_smd_com_power_vls201610hbx-1_ecm.pdf
+  inductor0402:
+    function: 4.7 uH inductor of the SoC's converter, the ring's part
+    manufacturer: TDK
+    mpn: PLEA67BCA4R7M-1PT00
+    package: "0402"
+    size: [1.0, 0.6, 0.8]
+    status: unverified       # 0402 and 1.08 ohm max from a distributor; 0.8 tall is the series height in a press article
+    url: https://product.tdk.com/system/files/dam/technicalsupport/tvcl/pdf/inductor_smd_com_power_plea67b_ecm.pdf
   protector:
     function: Cell protection
     manufacturer: ABLIC
@@ -86,13 +95,13 @@ parts:
     status: secondary        # body verified, height not extracted
     url: https://www.ablic.com/en/doc/datasheet/battery_protection/S82A1A_E.pdf
   antenna:
-    function: 2.4 GHz chip antenna
-    manufacturer: to choose
-    mpn: to choose
+    function: 2.4 GHz chip antenna, the same on all four products
+    manufacturer: Yageo (also listed under Pulse Electronics)
+    mpn: ANT1608LL14R2400A
     package: "1608 chip antenna"
     size: [1.6, 0.8, 0.4]
-    status: unverified
-    url: ""
+    status: secondary        # distributor listings: 2.4-2.484 GHz, 50 ohm, 0.40 max height; land pattern not read
+    url: https://www.lcsc.com/product-detail/C723550.html
   contact:
     function: Spring contact from the board to a pad on the back cover
     manufacturer: to choose
@@ -102,13 +111,13 @@ parts:
     status: unverified
     url: ""
   nfet:
-    function: Small N-channel MOSFET
-    manufacturer: to choose
-    mpn: to choose
-    package: "DFN1006 class"
+    function: Small N-channel MOSFET, the same in all eight places of the four products
+    manufacturer: Nexperia
+    mpn: PMZB290UNE2
+    package: "DFN1006B-3 (SOT883B)"
     size: [1.0, 0.6, 0.4]
-    status: unverified
-    url: ""
+    status: secondary        # Nexperia's table: 20 V, 320 mohm at 4.5 V, 480 at 2.5 V, Vgs(th) 0.95 max; height and pin order not read
+    url: https://www.nexperia.com/pip/PMZB290UNE2
   testpad:
     function: Test pad, bare copper
     manufacturer: none

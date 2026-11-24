@@ -183,8 +183,9 @@ def build() -> list[Component]:
         note="Charges at up to 100 mA: enough for these cells. "
              "BUCK2 unused: VSET2 grounded as documented; SW2 open and VOUT2 grounded are not confirmed. "
              "LED0-2, GPIO2-4 left open: not confirmed. NTC grounded: set DISABLENTC in firmware")
-    add(L, "2.2uH", "power", ("SW1", "V1V8"), mpn="to choose", package="0806",
-        note="Nordic asks for DCR under 0.4 ohm in 0806 (2.0 x 1.6 mm); part to choose")
+    add(L, "2.2uH", "power", ("SW1", "V1V8"), mpn="VLS201610HBX-2R2M-1", mfr="TDK", package="0806",
+        note="Nordic asks for DCR under 0.4 ohm in 0806 (2.0 x 1.6 mm); this one is 0.17 max, 1.45 A, 1.0 tall. "
+             "The same part on the band, the card and the pendant")
     res("47k", "VSET1", "GND", "power", note="Sets BUCK1 to 1.8 V at power-on")
     cap("1uF 25V", "VBUS", "power", pkg="0603", note=UNVERIFIED_CAPS)
     cap("1uF", "VBUSOUT", "power", note=UNVERIFIED_CAPS)
@@ -217,9 +218,9 @@ def build() -> list[Component]:
         note="Fit only if the cell has no protection of its own; thresholds to match the charge voltage")
     res("0.25", "CELL_N", "SENSE", "power", note="Overcurrent sense: about 200 mA trip (calculated, not from a datasheet)")
     res("470", "VM", "GND", "power")
-    add(NFET, "N-MOSFET", "power", {"1": "PROT_DO", "2": "SENSE", "3": "FET_MID"}, mpn="to choose",
-        note="Discharge FET; a dual common-drain part in about 1x1 mm")
-    add(NFET, "N-MOSFET", "power", {"1": "PROT_CO", "2": "GND", "3": "FET_MID"}, mpn="to choose", note="Charge FET")
+    add(NFET, "N-MOSFET", "power", {"1": "PROT_DO", "2": "SENSE", "3": "FET_MID"}, mpn="PMZB290UNE2", mfr="Nexperia", package="DFN1006B-3",
+        note="Discharge FET; two singles with their drains joined. The same FET in all eight places of the four products")
+    add(NFET, "N-MOSFET", "power", {"1": "PROT_CO", "2": "GND", "3": "FET_MID"}, mpn="PMZB290UNE2", mfr="Nexperia", package="DFN1006B-3", note="Charge FET")
 
     # ---- microcontroller and radio (Nordic QFAA reference circuit, configuration 1: DC/DC, no NFC) --
     # The reference schematic is a picture: values and part numbers were read from its labels,
@@ -235,14 +236,14 @@ def build() -> list[Component]:
     cap("10uF", "V1V8", "mcu_rf", pkg="0603")
     for _ in range(4):
         cap("100nF", "V1V8", "mcu_rf", pkg="0201", note="One next to each side's VDD pin. " + REF)
-    add(L, "4.7uH", "mcu_rf", ("DCC", "DECD"), mpn="to choose", package="0402", note="DC/DC inductor. " + REF)
+    add(L, "4.7uH", "mcu_rf", ("DCC", "DECD"), mpn="PLEA67BCA4R7M-1PT00", mfr="TDK", package="0402", note="DC/DC inductor. " + REF)
     cap("2.2uF", "DECD", "mcu_rf", pkg="0201", note=REF)
     add(FB, "ferrite bead", "mcu_rf", ("DECD", "DECA"), mpn="to choose", package="0201",
         note="The reference gives no value; the ring uses 120 ohm at 100 MHz (BLM03AG121SN1D)")
     cap("2.2uF", "DECA", "mcu_rf", pkg="0201", note=REF)
     cap("10nF", "DECA", "mcu_rf", pkg="0201", note=REF)
-    add(XTAL4, "32MHz", "mcu_rf", {"1": "XC1", "3": "XC2", "2": "GND", "4": "GND"}, mpn="to choose", package="2016",
-        note="2.0 x 1.6 mm, as in the reference; pads 2 and 4 are the lid, grounded: check against the part chosen. "
+    add(XTAL4, "32MHz", "mcu_rf", {"1": "XC1", "3": "XC2", "2": "GND", "4": "GND"}, mpn="CX2016DB32000D0FLJCC", mfr="Kyocera", package="2016",
+        note="2.0 x 1.6 mm, 8 pF, 10 ppm, as the reference asks (8 pF, 40 ppm in all); pads 2 and 4 are the lid, grounded: check against its drawing. "
              "Load capacitors are inside the chip")
     add(XTAL, "32.768kHz 9pF", "mcu_rf", ("XL1", "XL2"), mpn="9HT11-32.768KDZC-T", mfr="TXC", package="2012",
         note="Fitted, as on the band: the pendant stays connected for days and there is room. "
@@ -257,7 +258,7 @@ def build() -> list[Component]:
         note="Antenna tuning, series: value from measurement in a closed case, inside its metal rim, on a chest")
     cap("tune", "RF_50", "mcu_rf", pkg="0201", dnp=True, note="Antenna tuning, shunt")
     cap("tune", "ANT_FEED", "mcu_rf", pkg="0201", dnp=True, note="Antenna tuning, shunt")
-    add(ANT, "2.4 GHz", "mcu_rf", ("ANT_FEED",), mpn="to choose", package="1608 chip antenna",
+    add(ANT, "2.4 GHz", "mcu_rf", ("ANT_FEED",), mpn="ANT1608LL14R2400A", mfr="Yageo", package="1608 chip antenna",
         note="Chip antenna or printed trace at the edge of the board; decided with the first radio measurements")
 
     # ---- microphones: two on one clock and one data line ---------------------------------
@@ -283,8 +284,8 @@ def build() -> list[Component]:
     res("100k", "FLASH_IO3", "VFLASH", "storage", note="Termination in single-bit SPI to confirm")
 
     # ---- button, light, pads ---------------------------------------------------------------
-    add(SW, "tactile, side push", "ui", ("BTN_N", "GND"), mpn="to choose", package="side-push SMD, about 3.5x2.9x1.35",
-        note="Under the board, at its edge: a pusher in the rim presses it. Pulled up inside the PMIC (SHPHLD)")
+    add(SW, "tactile, side push", "ui", ("BTN_N", "GND"), mpn="EVQP7J01P", mfr="Panasonic", package="side-push 3.5x2.9x1.35",
+        note="The card's switch. Under the board, at its edge: a pusher in the rim presses it. Pulled up inside the PMIC (SHPHLD)")
     add(D, "Schottky", "ui", ("BTN_N", "BTN_WAKE"), mpn="RB521ZS-30", mfr="Rohm", package="0201",
         note="Pin 1 is the cathode. Anode at the SoC: keeps the PMIC pull-up voltage off the 1.8 V pin")
     add(LED, "red", "ui", ("LED_K", "VSYS"), mpn="SML-P11VT", mfr="Rohm", package="1.0x0.6x0.2",
@@ -292,10 +293,10 @@ def build() -> list[Component]:
              "This is the red one; the green and blue pendants take an LED of their colour in the same package, to choose")
     res("33k", "LED_K", "LED_SW", "ui",
         note="Steady glow, about 0.05 mA, whenever the microphones have power; adjust after a look through the stone, for each colour")
-    add(NFET, "N-MOSFET", "ui", {"1": "VMIC", "2": "GND", "3": "LED_SW"}, mpn="to choose",
+    add(NFET, "N-MOSFET", "ui", {"1": "VMIC", "2": "GND", "3": "LED_SW"}, mpn="PMZB290UNE2", mfr="Nexperia", package="DFN1006B-3",
         note="Gate is the microphone rail: the light is on whenever the microphones have power. Vgs(th) under 1 V")
     res("3.3k", "LED_K", "LED_HI", "ui", note="Bright, about 0.5 mA: firmware turns it on while sound is being recorded")
-    add(NFET, "N-MOSFET", "ui", {"1": "LED_AUX", "2": "GND", "3": "LED_HI"}, mpn="to choose",
+    add(NFET, "N-MOSFET", "ui", {"1": "LED_AUX", "2": "GND", "3": "LED_HI"}, mpn="PMZB290UNE2", mfr="Nexperia", package="DFN1006B-3",
         note="Firmware can only add light, never remove the steady glow")
     res("100k", "LED_AUX", "GND", "ui", note="Bright light off while the SoC is in reset")
     for label, net in (("SWDIO", "SWDIO"), ("SWDCLK", "SWDCLK")):

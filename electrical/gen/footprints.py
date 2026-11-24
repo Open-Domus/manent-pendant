@@ -38,11 +38,14 @@ CUSTOM = {
               ("5", "rect", 1.475, -1.05, 0.30, 0.30), ("4", "rect", 1.475, 1.05, 0.30, 0.30)],
         ring=("3", 0.71, 0.0, 1.025, 1.625), hole=(0.71, 0.0, 0.6),
         status="pad sizes and positions verified; pin-to-pad mapping read by matching two figures"),
-    # A side-push switch: the plunger leaves the body on its +Y side, towards the board edge.
-    "Side_Switch": dict(
+    # Panasonic ANCTB21E, EVQP7A/EVQP7J, as in manent-card: land pattern 5.0 x 2.5 overall, 2.2 between the
+    # two columns, 0.4 between the two rows. The upper pair is one terminal, the lower pair the other.
+    # The pattern is symmetric, so only the side of the knob differs from the card's: here it is +Y, the board edge.
+    "EVQP7J": dict(
         body=(3.5, 2.9),
-        pads=[("1", "rect", -1.9, -0.6, 0.9, 1.0), ("2", "rect", 1.9, -0.6, 0.9, 1.0)],
-        status="placeholder until the switch is chosen"),
+        pads=[("1", "rect", -1.8, 0.725, 1.4, 1.05), ("1", "rect", 1.8, 0.725, 1.4, 1.05),
+              ("2", "rect", -1.8, -0.725, 1.4, 1.05), ("2", "rect", 1.8, -0.725, 1.4, 1.05)],
+        status="land sizes from the catalogue drawing; its place under the body assumed centred. The knob is on the +Y side"),
     # ABLIC PV006-A-L-SD-1.0.
     "DFN-6_1414": dict(
         body=(1.4, 1.4),
@@ -157,7 +160,7 @@ def footprint_of(c) -> str | None:
     sym, pkg = c.sym.name, c.fields.get("Package", "")
     if sym in ("XTAL", "XTAL4"):
         return "Crystal_SMD_2016-4Pin_2.0x1.6mm" if sym == "XTAL4" else "Crystal_SMD_2012-2Pin_2.0x1.2mm"
-    simple = {"SW": "Side_Switch", "LED": "LED_0402_1005Metric", "ANTENNA": "Antenna_1608", "NMOS": "SOT-883",
+    simple = {"SW": "EVQP7J", "LED": "LED_0402_1005Metric", "ANTENNA": "Antenna_1608", "NMOS": "SOT-883",
               "CELL": "Cell_Tabs", "TVS": "D_0201_0603Metric", "D": "D_0201_0603Metric", "FB": "L_0201_0603Metric",
               "PAD": "Pad_Test_D1.0", "CONTACT": "Spring_Contact"}
     if sym in simple:

@@ -155,7 +155,7 @@ The band's, with one change: the switch.
 | Power | Nordic nPM1304, QFN32 | 5 x 5 x 0.85 | as in `manent-band` |
 | Flash | Winbond W25Q512NW, WSON-8 | 8 x 6 x 0.8 | from memory: part number, package and height to confirm |
 | Microphones | 2 x TDK T5838 | 3.5 x 2.65 x 0.98 | verified |
-| Switch | side-push tactile switch, to choose | about 3.5 x 2.9 x 1.35 | a size class, not a part: nothing read yet |
+| Switch | Panasonic EVQP7J01P, side push, the card's part | 3.5 x 2.9 x 1.35 | verified from the catalogue, as for the card |
 | Light | Rohm SML-P11VT (red); green and blue parts to choose | 1.0 x 0.6 x 0.2 | red: verified at 1 mA, dimmer is from curves; the others: nothing read yet |
 | Cell protection | ABLIC S-82A1A | 1.4 x 1.4 | verified |
 | Charging input | Infineon ESD230-B1-W0201 | 0.58 x 0.28 | verified |

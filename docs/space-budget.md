@@ -42,7 +42,7 @@ are trade size codes with estimated capacities, not a supplier's drawing.
 - **Room for the cell**: 26.1 x 15.6 x 4.17 (thickness before swelling), less what the oval takes at the corners.
 - **Cell**: 401525, 25.0 x 15.0 x 4.0, about 120 mAh. Spare: 1.1 in length, 0.6 in width, 0.18 in height.
 - **Under the board**: 4.72 to the back cover, which is the height the spring contacts must span.
-- **Board**: an ellipse 37.4 x 23.4, 687.3 mm2. Large parts and keep-outs take 172.3; the 52 small parts need 45.5, 9% of what is free.
+- **Board**: an ellipse 37.4 x 23.4, 687.3 mm2. Large parts and keep-outs take 172.3; the 52 small parts need 45.7, 9% of what is free.
 - **Microphones**: 32.9 apart.
 - **Mass** (estimate): titanium rim 3.7 g, resin back 0.69 g, glass stone 2.61 g, board 1.26 g, cell 2.76 g, about 11.0 g without the chain.
 - Drawings: [board from the front](../mechanical/out/plan-A.svg), [section](../mechanical/out/section-A.svg).
@@ -67,7 +67,7 @@ are trade size codes with estimated capacities, not a supplier's drawing.
 - **Room for the cell**: 28.1 x 20.6 x 4.17 (thickness before swelling), less what the oval takes at the corners.
 - **Cell**: 402025, 25.0 x 20.0 x 4.0, about 160 mAh. Spare: 3.1 in length, 0.6 in width, 0.18 in height.
 - **Under the board**: 4.72 to the back cover, which is the height the spring contacts must span.
-- **Board**: an ellipse 39.4 x 28.4, 878.8 mm2. Large parts and keep-outs take 172.3; the 52 small parts need 45.5, 6% of what is free.
+- **Board**: an ellipse 39.4 x 28.4, 878.8 mm2. Large parts and keep-outs take 172.3; the 52 small parts need 45.7, 6% of what is free.
 - **Microphones**: 34.9 apart.
 - **Mass** (estimate): titanium rim 4.1 g, resin back 0.87 g, glass stone 3.33 g, board 1.48 g, cell 3.68 g, about 13.5 g without the chain.
 - Drawings: [board from the front](../mechanical/out/plan-B.svg), [section](../mechanical/out/section-B.svg).

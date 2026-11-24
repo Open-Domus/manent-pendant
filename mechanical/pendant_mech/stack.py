@@ -33,7 +33,7 @@ FINE_PITCH_MARGIN = 0.30
 PACKING = 0.50        # share of the free board area that small parts may take; the rest is for tracks
 MIN_MIC_DISTANCE = 20.0
 EDGE = 0.40           # copper to the board edge
-SMALL = {"passive0201", "passive0402", "passive0603", "nfet", "xtal32m", "xtal32k", "inductor", "protector"}
+SMALL = {"passive0201", "passive0402", "passive0603", "inductor0402", "nfet", "xtal32m", "xtal32k", "inductor", "protector"}
 
 
 @lru_cache
@@ -57,6 +57,8 @@ def body_of(c) -> str | None:
         return "xtal32k"
     if pkg == "0806":
         return "inductor"
+    if name == "L" and value == "4.7uH":
+        return "inductor0402"
     return {"0603": "passive0603", "0402": "passive0402"}.get(pkg, "passive0201")
 
 

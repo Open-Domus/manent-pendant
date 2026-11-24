@@ -1,6 +1,6 @@
 References,Quantity,Value,Manufacturer,Part number,Package,Fitted,Notes
 U1,1,nPM1304,Nordic Semiconductor,nPM1304-QEAA-R7,"QFN-32 5x5, 0.5 mm pitch",yes,"Charges at up to 100 mA: enough for these cells. BUCK2 unused: VSET2 grounded as documented; SW2 open and VOUT2 grounded are not confirmed. LED0-2, GPIO2-4 left open: not confirmed. NTC grounded: set DISABLENTC in firmware"
-L1,1,2.2uH,,to choose,0806,yes,Nordic asks for DCR under 0.4 ohm in 0806 (2.0 x 1.6 mm); part to choose
+L1,1,2.2uH,TDK,VLS201610HBX-2R2M-1,0806,yes,"Nordic asks for DCR under 0.4 ohm in 0806 (2.0 x 1.6 mm); this one is 0.17 max, 1.45 A, 1.0 tall. The same part on the band, the card and the pendant"
 R1,1,47k,,,0402,yes,Sets BUCK1 to 1.8 V at power-on
 C1,1,1uF 25V,,,0603,yes,Value from Nordic's reference list; which net each capacitor sits on is not confirmed
 C2 C7 C8,3,1uF,,,0402,yes,Value from Nordic's reference list; which net each capacitor sits on is not confirmed | Load switch output; value to confirm
@@ -15,14 +15,14 @@ R4,1,330,,,0402,yes,Protector supply filter
 U2,1,S-82A1A,ABLIC,S-82A1AAG-A6T5S (variant to confirm),DFN-6 1.4x1.4,yes,Fit only if the cell has no protection of its own; thresholds to match the charge voltage
 R5,1,0.25,,,0402,yes,"Overcurrent sense: about 200 mA trip (calculated, not from a datasheet)"
 R6,1,470,,,0402,yes,
-Q1 Q2 Q3 Q4,4,N-MOSFET,,to choose,,yes,"Discharge FET; a dual common-drain part in about 1x1 mm | Charge FET | Gate is the microphone rail: the light is on whenever the microphones have power. Vgs(th) under 1 V | Firmware can only add light, never remove the steady glow"
+Q1 Q2 Q3 Q4,4,N-MOSFET,Nexperia,PMZB290UNE2,DFN1006B-3,yes,"Discharge FET; two singles with their drains joined. The same FET in all eight places of the four products | Charge FET | Gate is the microphone rail: the light is on whenever the microphones have power. Vgs(th) under 1 V | Firmware can only add light, never remove the steady glow"
 U3,1,nRF54L15,Nordic Semiconductor,nRF54L15-QFAA-R,"QFN-48 6x6, 0.4 mm pitch",yes,Pin 49 is the exposed pad: ground
 C11 C12 C13 C14 C22 C23,6,100nF,,,0201,yes,"One next to each side's VDD pin. Value from Nordic's QFN48 reference; its place in the circuit is assumed from the CSP47 one | X7R, next to pin 7 of microphone A | X7R, next to pin 7 of microphone B"
-L2,1,4.7uH,,to choose,0402,yes,DC/DC inductor. Value from Nordic's QFN48 reference; its place in the circuit is assumed from the CSP47 one
+L2,1,4.7uH,TDK,PLEA67BCA4R7M-1PT00,0402,yes,DC/DC inductor. Value from Nordic's QFN48 reference; its place in the circuit is assumed from the CSP47 one
 C15 C16,2,2.2uF,,,0201,yes,Value from Nordic's QFN48 reference; its place in the circuit is assumed from the CSP47 one
 FB1,1,ferrite bead,,to choose,0201,yes,The reference gives no value; the ring uses 120 ohm at 100 MHz (BLM03AG121SN1D)
 C17,1,10nF,,,0201,yes,Value from Nordic's QFN48 reference; its place in the circuit is assumed from the CSP47 one
-Y1,1,32MHz,,to choose,2016,yes,"2.0 x 1.6 mm, as in the reference; pads 2 and 4 are the lid, grounded: check against the part chosen. Load capacitors are inside the chip"
+Y1,1,32MHz,Kyocera,CX2016DB32000D0FLJCC,2016,yes,"2.0 x 1.6 mm, 8 pF, 10 ppm, as the reference asks (8 pF, 40 ppm in all); pads 2 and 4 are the lid, grounded: check against its drawing. Load capacitors are inside the chip"
 Y2,1,32.768kHz 9pF,TXC,9HT11-32.768KDZC-T,2012,yes,"Fitted, as on the band: the pendant stays connected for days and there is room. Load capacitors are inside the chip"
 L3,1,2.7nH,Murata,LQP03HQ2N7B02,0201,yes,"Matching network: part from the reference, order in the chain assumed"
 C18,1,1.5pF,Murata,GJM0335C1E1R5WB01,0201,yes,"Matching network: part from the reference, order in the chain assumed"
@@ -30,11 +30,11 @@ L4 L5,2,3.5nH,Murata,LQP03HQ3N5B02,0201,yes,"Matching network: part from the ref
 C19,1,2.0pF,Murata,GJM0335C1E2R0WB01,0201,yes,"Matching network: part from the reference, order in the chain assumed"
 R7,1,0,,,0201,yes,"Antenna tuning, series: value from measurement in a closed case, inside its metal rim, on a chest"
 C20 C21,2,tune,,,0201,no,"Antenna tuning, shunt"
-AE1,1,2.4 GHz,,to choose,1608 chip antenna,yes,Chip antenna or printed trace at the edge of the board; decided with the first radio measurements
+AE1,1,2.4 GHz,Yageo,ANT1608LL14R2400A,1608 chip antenna,yes,Chip antenna or printed trace at the edge of the board; decided with the first radio measurements
 MK1 MK2,2,T5838,TDK InvenSense,MMICT5838-00-012,3.5x2.65x0.98 bottom port,yes,"Microphone A, at the tip with the bail, towards the mouth; SELECT at GND picks its clock edge. No pull resistor on DATA. Board hole 0.5-1.0 mm under the port | Microphone B, at the opposite tip; SELECT at VMIC picks its clock edge. No pull resistor on DATA. Board hole 0.5-1.0 mm under the port"
 U4,1,W25Q512NW,Winbond,W25Q512NW (ordering code to confirm),WSON-8 8x6,yes,"512 Mbit at 1.8 V; part number and package from memory, not from the datasheet. Exposed pad to ground is the usual practice, to confirm. Any 1.8 V serial NOR in this package fits"
 R8 R9 R10 R13,4,100k,,,0402,yes,Keeps the chip deselected while the rail rises | Termination in single-bit SPI to confirm | Bright light off while the SoC is in reset
-SW1,1,"tactile, side push",,to choose,"side-push SMD, about 3.5x2.9x1.35",yes,"Under the board, at its edge: a pusher in the rim presses it. Pulled up inside the PMIC (SHPHLD)"
+SW1,1,"tactile, side push",Panasonic,EVQP7J01P,side-push 3.5x2.9x1.35,yes,"The card's switch. Under the board, at its edge: a pusher in the rim presses it. Pulled up inside the PMIC (SHPHLD)"
 D2,1,Schottky,Rohm,RB521ZS-30,0201,yes,Pin 1 is the cathode. Anode at the SoC: keeps the PMIC pull-up voltage off the 1.8 V pin
 D3,1,red,Rohm,SML-P11VT,1.0x0.6x0.2,yes,"Pin 1 is the cathode. Under the stone: it lights the whole cabochon from inside. This is the red one; the green and blue pendants take an LED of their colour in the same package, to choose"
 R11,1,33k,,,0402,yes,"Steady glow, about 0.05 mA, whenever the microphones have power; adjust after a look through the stone, for each colour"
