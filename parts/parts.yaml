@@ -1,0 +1,198 @@
+# Single source for part bodies and BOM fields.
+# size: [length, width, height above the board], millimetres.
+# status: verified   = read on a manufacturer page or datasheet
+#         secondary  = distributor, press release or teardown summary
+#         unverified = from memory or an estimate; check before freezing
+# Entries shared with the ring and the band carry the status they have in those repositories.
+parts:
+  soc:
+    function: BLE system-on-chip
+    manufacturer: Nordic Semiconductor
+    mpn: nRF54L15-QFAA
+    package: QFN-48, 6 x 6 mm, 0.4 mm pitch
+    size: [6.0, 6.0, 0.85]
+    status: secondary        # dimension table read once as page text; see parts/pins
+    url: https://docs.nordicsemi.com/r/bundle/ps_nrf54l15/page/chapters/mec_spec.html
+  pmic:
+    function: Charger, 1.8 V buck, load switches, ship mode
+    manufacturer: Nordic Semiconductor
+    mpn: nPM1304-QEAA
+    package: QFN-32, 5 x 5 mm, 0.5 mm pitch
+    size: [5.0, 5.0, 0.85]
+    status: secondary        # dimension table read once as page text; see parts/pins
+    url: https://docs.nordicsemi.com/r/bundle/ps_npm1304/page/product_overview.html
+  flash:
+    function: 512 Mbit 1.8 V SPI NOR flash
+    manufacturer: Winbond
+    mpn: W25Q512NW (ordering code to confirm)
+    package: WSON-8, 8 x 6 mm
+    size: [8.0, 6.0, 0.8]
+    status: unverified       # part number, package and height from memory
+    url: ""
+  mic:
+    function: PDM MEMS microphone with wake-on-sound, bottom port
+    manufacturer: TDK InvenSense
+    mpn: T5838
+    package: LGA, bottom port
+    size: [2.65, 3.5, 0.98]  # as placed: long side across the case
+    status: verified
+    url: https://invensense.tdk.com/products/digital/t5838/
+  button:
+    function: Tactile switch, pushed from the side through the rim
+    manufacturer: to choose
+    mpn: to choose
+    package: side-push SMD switch, about 3.5 x 2.9 mm
+    size: [3.5, 2.9, 1.35]
+    status: unverified       # the size class of the small side-push switches; no part read yet
+    url: ""
+  led:
+    function: Recording indicator
+    manufacturer: Rohm
+    mpn: SML-P11VT
+    package: "0402"
+    size: [1.0, 0.6, 0.2]
+    status: verified
+    url: https://fscdn.rohm.com/en/products/databook/datasheet/opto/led/chip_mono/sml-p11-e.pdf
+  xtal32m:
+    function: 32 MHz crystal
+    manufacturer: Kyocera
+    mpn: to choose
+    package: "2016"
+    size: [2.0, 1.6, 0.5]
+    status: unverified       # package from Nordic's QFN48 reference; part and height not chosen
+    url: ""
+  xtal32k:
+    function: 32.768 kHz crystal
+    manufacturer: TXC
+    mpn: 9HT11-32.768KDZC-T
+    package: "2012"
+    size: [2.0, 1.2, 0.6]
+    status: secondary        # part from Nordic's reference list; height not checked
+    url: ""
+  inductor:
+    function: Buck inductor, 2.2 uH
+    manufacturer: Murata
+    mpn: to choose
+    package: "0806 (2016 metric)"
+    size: [2.0, 1.6, 1.0]
+    status: unverified
+    url: ""
+  protector:
+    function: Cell protection
+    manufacturer: ABLIC
+    mpn: S-82A1A
+    package: DFN-6 1.4 x 1.4
+    size: [1.4, 1.4, 0.5]
+    status: secondary        # body verified, height not extracted
+    url: https://www.ablic.com/en/doc/datasheet/battery_protection/S82A1A_E.pdf
+  antenna:
+    function: 2.4 GHz chip antenna
+    manufacturer: to choose
+    mpn: to choose
+    package: "1608 chip antenna"
+    size: [1.6, 0.8, 0.4]
+    status: unverified
+    url: ""
+  contact:
+    function: Spring contact from the board to a pad on the back cover
+    manufacturer: to choose
+    mpn: to choose
+    package: SMD spring finger, about 5 mm working height
+    size: [2.0, 1.5, 5.0]
+    status: unverified
+    url: ""
+  nfet:
+    function: Small N-channel MOSFET
+    manufacturer: to choose
+    mpn: to choose
+    package: "DFN1006 class"
+    size: [1.0, 0.6, 0.4]
+    status: unverified
+    url: ""
+  testpad:
+    function: Test pad, bare copper
+    manufacturer: none
+    mpn: board pad
+    package: round pad, 1 mm
+    size: [1.0, 1.0, 0.05]
+    status: verified
+    url: ""
+  celltabs:
+    function: Pads the cell tabs are soldered to
+    manufacturer: none
+    mpn: board pads
+    package: two pads
+    size: [1.6, 4.4, 0.3]
+    status: unverified
+    url: ""
+  passive0603:
+    function: Bulk capacitor
+    manufacturer: generic
+    mpn: "0603"
+    package: "0603"
+    size: [1.6, 0.8, 0.8]
+    status: verified
+    url: ""
+  passive0201:
+    function: Radio and decoupling parts, bead, diode
+    manufacturer: generic
+    mpn: "0201"
+    package: "0201"
+    size: [0.6, 0.3, 0.3]
+    status: verified
+    url: ""
+  passive0402:
+    function: Resistor, capacitor, small inductor
+    manufacturer: generic
+    mpn: "0402"
+    package: "0402"
+    size: [1.0, 0.5, 0.55]
+    status: verified
+    url: ""
+
+# Flat lithium-polymer pouch cells, named by the trade size code (thickness, width, length).
+# size: [length, width, thickness]. No supplier has been asked: the sizes are what the code
+# says and the capacities are an estimate of about 80 mAh per cubic centimetre.
+cells:
+  lp351525:
+    manufacturer: generic
+    mpn: "351525"
+    size: [25.0, 15.0, 3.5]
+    capacity_mah: 100
+    status: unverified
+    url: ""
+  lp401525:
+    manufacturer: generic
+    mpn: "401525"
+    size: [25.0, 15.0, 4.0]
+    capacity_mah: 120
+    status: unverified
+    url: ""
+  lp401725:
+    manufacturer: generic
+    mpn: "401725"
+    size: [25.0, 17.0, 4.0]
+    capacity_mah: 135
+    status: unverified
+    url: ""
+  lp501725:
+    manufacturer: generic
+    mpn: "501725"
+    size: [25.0, 17.0, 5.0]
+    capacity_mah: 170
+    status: unverified
+    url: ""
+  lp402025:
+    manufacturer: generic
+    mpn: "402025"
+    size: [25.0, 20.0, 4.0]
+    capacity_mah: 160
+    status: unverified
+    url: ""
+  lp402030:
+    manufacturer: generic
+    mpn: "402030"
+    size: [30.0, 20.0, 4.0]
+    capacity_mah: 190
+    status: unverified
+    url: ""

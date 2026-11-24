@@ -1,0 +1,723 @@
+{
+ "adopted": "A",
+ "envelopes": {
+  "A": {
+   "envelope": "A-oval",
+   "case": [
+    40.0,
+    26.0,
+    9.5
+   ],
+   "rim_height": 8.3,
+   "board": [
+    37.4,
+    23.4,
+    0.6
+   ],
+   "ok": true,
+   "problems": [],
+   "stack": {
+    "back cover": 0.8,
+    "adhesive": 0.1,
+    "cell, swollen": 4.32,
+    "gap under the board": 0.3,
+    "board": 0.6,
+    "tallest part on the outer face": 1.0,
+    "gap under the stone": 0.2,
+    "stone, at its centre": 2.0,
+    "left over": 0.18
+   },
+   "cell_room": {
+    "length": 26.1,
+    "width": 15.6,
+    "thickness": 4.17
+   },
+   "cell": {
+    "key": "lp401525",
+    "mpn": "401525",
+    "size": [
+     25.0,
+     15.0,
+     4.0
+    ],
+    "capacity_mah": 120,
+    "spare_length": 1.1,
+    "spare_width": 0.6,
+    "spare_height": 0.18,
+    "board_to_back": 4.72
+   },
+   "area": {
+    "board": 687.3,
+    "large_parts_and_keepouts": 172.3,
+    "free": 515.0,
+    "small_parts": 52,
+    "small_parts_need": 45.5,
+    "share_of_free": 0.09
+   },
+   "mic_distance": 32.9,
+   "mass": {
+    "rim_g": 3.7,
+    "back_g": 0.69,
+    "stone_g": 2.61,
+    "board_g": 1.26,
+    "cell_g": 2.76,
+    "total_g_estimate": 11.0
+   },
+   "placed": [
+    {
+     "name": "microphone A",
+     "part": "mic",
+     "face": "bottom",
+     "x": 0.9,
+     "y": 9.95,
+     "w": 2.65,
+     "h": 3.5,
+     "rot": 90
+    },
+    {
+     "name": "microphone A gasket",
+     "part": null,
+     "face": "top",
+     "x": 0.73,
+     "y": 10.2,
+     "w": 3.0,
+     "h": 3.0,
+     "rot": 0
+    },
+    {
+     "name": "microphone B",
+     "part": "mic",
+     "face": "bottom",
+     "x": 33.85,
+     "y": 9.95,
+     "w": 2.65,
+     "h": 3.5,
+     "rot": 90
+    },
+    {
+     "name": "microphone B gasket",
+     "part": null,
+     "face": "top",
+     "x": 33.67,
+     "y": 10.2,
+     "w": 3.0,
+     "h": 3.0,
+     "rot": 0
+    },
+    {
+     "name": "light",
+     "part": "led",
+     "face": "top",
+     "x": 18.2,
+     "y": 11.4,
+     "w": 1.0,
+     "h": 0.6,
+     "rot": 0
+    },
+    {
+     "name": "antenna keep-out",
+     "part": null,
+     "face": "both",
+     "x": 10.6,
+     "y": 0.0,
+     "w": 7.0,
+     "h": 3.4,
+     "rot": 0
+    },
+    {
+     "name": "antenna",
+     "part": "antenna",
+     "face": "top",
+     "x": 13.3,
+     "y": 1.3,
+     "w": 1.6,
+     "h": 0.8,
+     "rot": 0
+    },
+    {
+     "name": "button",
+     "part": "button",
+     "face": "bottom",
+     "x": 16.95,
+     "y": 20.0,
+     "w": 3.5,
+     "h": 2.9,
+     "rot": 0
+    },
+    {
+     "name": "contact charge +",
+     "part": "contact",
+     "face": "bottom",
+     "x": 11.2,
+     "y": 20.05,
+     "w": 2.0,
+     "h": 1.5,
+     "rot": 0
+    },
+    {
+     "name": "contact charge -",
+     "part": "contact",
+     "face": "bottom",
+     "x": 13.7,
+     "y": 20.05,
+     "w": 2.0,
+     "h": 1.5,
+     "rot": 0
+    },
+    {
+     "name": "contact SWDIO",
+     "part": "contact",
+     "face": "bottom",
+     "x": 21.7,
+     "y": 20.05,
+     "w": 2.0,
+     "h": 1.5,
+     "rot": 0
+    },
+    {
+     "name": "contact SWDCLK",
+     "part": "contact",
+     "face": "bottom",
+     "x": 24.2,
+     "y": 20.05,
+     "w": 2.0,
+     "h": 1.5,
+     "rot": 0
+    },
+    {
+     "name": "cell tabs",
+     "part": "celltabs",
+     "face": "bottom",
+     "x": 31.4,
+     "y": 9.5,
+     "w": 1.6,
+     "h": 4.4,
+     "rot": 0
+    },
+    {
+     "name": "microcontroller",
+     "part": "soc",
+     "face": "top",
+     "x": 10.8,
+     "y": 7.5,
+     "w": 6.6,
+     "h": 6.6,
+     "rot": 90
+    },
+    {
+     "name": "flash",
+     "part": "flash",
+     "face": "top",
+     "x": 20.3,
+     "y": 12.3,
+     "w": 8.0,
+     "h": 6.0,
+     "rot": 0
+    },
+    {
+     "name": "power chip",
+     "part": "pmic",
+     "face": "top",
+     "x": 20.3,
+     "y": 5.8,
+     "w": 5.6,
+     "h": 5.6,
+     "rot": 0
+    },
+    {
+     "name": "test pad nRESET",
+     "part": "testpad",
+     "face": "top",
+     "x": 13.7,
+     "y": 20.3,
+     "w": 1.0,
+     "h": 1.0,
+     "rot": 0
+    },
+    {
+     "name": "test pad UART TX",
+     "part": "testpad",
+     "face": "top",
+     "x": 15.2,
+     "y": 20.3,
+     "w": 1.0,
+     "h": 1.0,
+     "rot": 0
+    },
+    {
+     "name": "test pad UART RX",
+     "part": "testpad",
+     "face": "top",
+     "x": 16.7,
+     "y": 20.3,
+     "w": 1.0,
+     "h": 1.0,
+     "rot": 0
+    },
+    {
+     "name": "test pad 1V8",
+     "part": "testpad",
+     "face": "top",
+     "x": 18.2,
+     "y": 20.3,
+     "w": 1.0,
+     "h": 1.0,
+     "rot": 0
+    },
+    {
+     "name": "test pad GND",
+     "part": "testpad",
+     "face": "top",
+     "x": 19.7,
+     "y": 20.3,
+     "w": 1.0,
+     "h": 1.0,
+     "rot": 0
+    },
+    {
+     "name": "test pad VBAT",
+     "part": "testpad",
+     "face": "top",
+     "x": 21.2,
+     "y": 20.3,
+     "w": 1.0,
+     "h": 1.0,
+     "rot": 0
+    },
+    {
+     "name": "test pad VBUS",
+     "part": "testpad",
+     "face": "top",
+     "x": 22.7,
+     "y": 20.3,
+     "w": 1.0,
+     "h": 1.0,
+     "rot": 0
+    }
+   ]
+  },
+  "B": {
+   "envelope": "B-cameo",
+   "case": [
+    42.0,
+    31.0,
+    9.5
+   ],
+   "rim_height": 8.3,
+   "board": [
+    39.4,
+    28.4,
+    0.6
+   ],
+   "ok": true,
+   "problems": [],
+   "stack": {
+    "back cover": 0.8,
+    "adhesive": 0.1,
+    "cell, swollen": 4.32,
+    "gap under the board": 0.3,
+    "board": 0.6,
+    "tallest part on the outer face": 1.0,
+    "gap under the stone": 0.2,
+    "stone, at its centre": 2.0,
+    "left over": 0.18
+   },
+   "cell_room": {
+    "length": 28.1,
+    "width": 20.6,
+    "thickness": 4.17
+   },
+   "cell": {
+    "key": "lp402025",
+    "mpn": "402025",
+    "size": [
+     25.0,
+     20.0,
+     4.0
+    ],
+    "capacity_mah": 160,
+    "spare_length": 3.1,
+    "spare_width": 0.6,
+    "spare_height": 0.18,
+    "board_to_back": 4.72
+   },
+   "area": {
+    "board": 878.8,
+    "large_parts_and_keepouts": 172.3,
+    "free": 706.5,
+    "small_parts": 52,
+    "small_parts_need": 45.5,
+    "share_of_free": 0.06
+   },
+   "mic_distance": 34.9,
+   "mass": {
+    "rim_g": 4.1,
+    "back_g": 0.87,
+    "stone_g": 3.33,
+    "board_g": 1.48,
+    "cell_g": 3.68,
+    "total_g_estimate": 13.5
+   },
+   "placed": [
+    {
+     "name": "microphone A",
+     "part": "mic",
+     "face": "bottom",
+     "x": 0.9,
+     "y": 12.45,
+     "w": 2.65,
+     "h": 3.5,
+     "rot": 90
+    },
+    {
+     "name": "microphone A gasket",
+     "part": null,
+     "face": "top",
+     "x": 0.73,
+     "y": 12.7,
+     "w": 3.0,
+     "h": 3.0,
+     "rot": 0
+    },
+    {
+     "name": "microphone B",
+     "part": "mic",
+     "face": "bottom",
+     "x": 35.85,
+     "y": 12.45,
+     "w": 2.65,
+     "h": 3.5,
+     "rot": 90
+    },
+    {
+     "name": "microphone B gasket",
+     "part": null,
+     "face": "top",
+     "x": 35.67,
+     "y": 12.7,
+     "w": 3.0,
+     "h": 3.0,
+     "rot": 0
+    },
+    {
+     "name": "light",
+     "part": "led",
+     "face": "top",
+     "x": 19.2,
+     "y": 13.9,
+     "w": 1.0,
+     "h": 0.6,
+     "rot": 0
+    },
+    {
+     "name": "antenna keep-out",
+     "part": null,
+     "face": "both",
+     "x": 11.6,
+     "y": 0.0,
+     "w": 7.0,
+     "h": 3.4,
+     "rot": 0
+    },
+    {
+     "name": "antenna",
+     "part": "antenna",
+     "face": "top",
+     "x": 14.3,
+     "y": 1.3,
+     "w": 1.6,
+     "h": 0.8,
+     "rot": 0
+    },
+    {
+     "name": "button",
+     "part": "button",
+     "face": "bottom",
+     "x": 17.95,
+     "y": 25.0,
+     "w": 3.5,
+     "h": 2.9,
+     "rot": 0
+    },
+    {
+     "name": "contact charge +",
+     "part": "contact",
+     "face": "bottom",
+     "x": 12.2,
+     "y": 25.05,
+     "w": 2.0,
+     "h": 1.5,
+     "rot": 0
+    },
+    {
+     "name": "contact charge -",
+     "part": "contact",
+     "face": "bottom",
+     "x": 14.7,
+     "y": 25.05,
+     "w": 2.0,
+     "h": 1.5,
+     "rot": 0
+    },
+    {
+     "name": "contact SWDIO",
+     "part": "contact",
+     "face": "bottom",
+     "x": 22.7,
+     "y": 25.05,
+     "w": 2.0,
+     "h": 1.5,
+     "rot": 0
+    },
+    {
+     "name": "contact SWDCLK",
+     "part": "contact",
+     "face": "bottom",
+     "x": 25.2,
+     "y": 25.05,
+     "w": 2.0,
+     "h": 1.5,
+     "rot": 0
+    },
+    {
+     "name": "cell tabs",
+     "part": "celltabs",
+     "face": "bottom",
+     "x": 32.4,
+     "y": 12.0,
+     "w": 1.6,
+     "h": 4.4,
+     "rot": 0
+    },
+    {
+     "name": "microcontroller",
+     "part": "soc",
+     "face": "top",
+     "x": 11.8,
+     "y": 7.5,
+     "w": 6.6,
+     "h": 6.6,
+     "rot": 90
+    },
+    {
+     "name": "flash",
+     "part": "flash",
+     "face": "top",
+     "x": 21.3,
+     "y": 14.8,
+     "w": 8.0,
+     "h": 6.0,
+     "rot": 0
+    },
+    {
+     "name": "power chip",
+     "part": "pmic",
+     "face": "top",
+     "x": 21.3,
+     "y": 8.3,
+     "w": 5.6,
+     "h": 5.6,
+     "rot": 0
+    },
+    {
+     "name": "test pad nRESET",
+     "part": "testpad",
+     "face": "top",
+     "x": 14.7,
+     "y": 25.3,
+     "w": 1.0,
+     "h": 1.0,
+     "rot": 0
+    },
+    {
+     "name": "test pad UART TX",
+     "part": "testpad",
+     "face": "top",
+     "x": 16.2,
+     "y": 25.3,
+     "w": 1.0,
+     "h": 1.0,
+     "rot": 0
+    },
+    {
+     "name": "test pad UART RX",
+     "part": "testpad",
+     "face": "top",
+     "x": 17.7,
+     "y": 25.3,
+     "w": 1.0,
+     "h": 1.0,
+     "rot": 0
+    },
+    {
+     "name": "test pad 1V8",
+     "part": "testpad",
+     "face": "top",
+     "x": 19.2,
+     "y": 25.3,
+     "w": 1.0,
+     "h": 1.0,
+     "rot": 0
+    },
+    {
+     "name": "test pad GND",
+     "part": "testpad",
+     "face": "top",
+     "x": 20.7,
+     "y": 25.3,
+     "w": 1.0,
+     "h": 1.0,
+     "rot": 0
+    },
+    {
+     "name": "test pad VBAT",
+     "part": "testpad",
+     "face": "top",
+     "x": 22.2,
+     "y": 25.3,
+     "w": 1.0,
+     "h": 1.0,
+     "rot": 0
+    },
+    {
+     "name": "test pad VBUS",
+     "part": "testpad",
+     "face": "top",
+     "x": 23.7,
+     "y": 25.3,
+     "w": 1.0,
+     "h": 1.0,
+     "rot": 0
+    }
+   ]
+  }
+ },
+ "size_sweep": [
+  {
+   "case": [
+    40.0,
+    26.0,
+    9.0
+   ],
+   "room": {
+    "length": 26.1,
+    "width": 15.6,
+    "thickness": 3.7
+   },
+   "best_cell": "lp351525",
+   "capacity_mah": 100
+  },
+  {
+   "case": [
+    40.0,
+    26.0,
+    9.5
+   ],
+   "room": {
+    "length": 26.1,
+    "width": 15.6,
+    "thickness": 4.17
+   },
+   "best_cell": "lp401525",
+   "capacity_mah": 120
+  },
+  {
+   "case": [
+    40.0,
+    26.0,
+    10.6
+   ],
+   "room": {
+    "length": 26.1,
+    "width": 15.6,
+    "thickness": 5.19
+   },
+   "best_cell": "lp401525",
+   "capacity_mah": 120
+  },
+  {
+   "case": [
+    40.0,
+    28.0,
+    9.0
+   ],
+   "room": {
+    "length": 26.1,
+    "width": 17.6,
+    "thickness": 3.7
+   },
+   "best_cell": "lp351525",
+   "capacity_mah": 100
+  },
+  {
+   "case": [
+    40.0,
+    28.0,
+    9.5
+   ],
+   "room": {
+    "length": 26.1,
+    "width": 17.6,
+    "thickness": 4.17
+   },
+   "best_cell": "lp401725",
+   "capacity_mah": 135
+  },
+  {
+   "case": [
+    40.0,
+    28.0,
+    10.6
+   ],
+   "room": {
+    "length": 26.1,
+    "width": 17.6,
+    "thickness": 5.19
+   },
+   "best_cell": "lp501725",
+   "capacity_mah": 170
+  },
+  {
+   "case": [
+    40.0,
+    31.0,
+    9.0
+   ],
+   "room": {
+    "length": 26.1,
+    "width": 20.6,
+    "thickness": 3.7
+   },
+   "best_cell": "lp351525",
+   "capacity_mah": 100
+  },
+  {
+   "case": [
+    40.0,
+    31.0,
+    9.5
+   ],
+   "room": {
+    "length": 26.1,
+    "width": 20.6,
+    "thickness": 4.17
+   },
+   "best_cell": "lp402025",
+   "capacity_mah": 160
+  },
+  {
+   "case": [
+    40.0,
+    31.0,
+    10.6
+   ],
+   "room": {
+    "length": 26.1,
+    "width": 20.6,
+    "thickness": 5.19
+   },
+   "best_cell": "lp501725",
+   "capacity_mah": 170
+  }
+ ]
+}

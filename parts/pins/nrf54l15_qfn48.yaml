@@ -1,0 +1,76 @@
+# nRF54L15 QFN48 (QFAA) pin assignments.
+# Source: Nordic product specification, "QFN48 (QFAA) package pin assignments", read on 2026-11-23
+# as page text (the table flattened into lines), once. Pin numbers, names and the clock-pin flag
+# were legible. The clock-pin set is the same as in the CSP47 table checked for the ring.
+# Not yet compared with the package figure or with Nordic's reference layout files.
+# https://docs.nordicsemi.com/r/bundle/ps_nrf54l15/page/chapters/pin.html
+# Pin 49 is the exposed pad. This package has no P1.15. ck: clock-capable pin.
+status: secondary
+# Package table ("Table 2. Package dimensions in millimeters", QFN48 package page, read as text
+# on 2026-11-24): each entry is [min, nominal, max]. Nordic prints no land pattern there.
+# nordic_land is the pattern in Nordic's reference layout (Altium board opened with KiCad's
+# importer on 2026-11-24): lead pads are ovals [width, length] centred lead_centre from the
+# middle, the centre land is square, with through vias under it.
+package:
+  body: [6.0, 6.0, 0.85]
+  pitch: 0.4
+  lead: [0.2, 0.4]
+  exposed_pad: [4.6, 4.6]
+  limits: {body: [5.9, 6.0, 6.1], lead_width: [0.15, 0.2, 0.25], lead_length: [0.35, 0.4, 0.45], exposed_pad: [4.5, 4.6, 4.7], lead_to_pad: 0.3}
+  nordic_land: {file: 'nRF54L15-QFAA Reference Layout 0_8', lead: [0.2, 0.65], lead_centre: 3.025, centre: 4.7, vias: {count: 16, pitch: 1.2, drill: 0.33}}
+pins:
+  1: {name: P1.00, type: io, alt: XL1}
+  2: {name: P1.01, type: io, alt: XL2}
+  3: {name: P1.02, type: io, alt: NFC1}
+  4: {name: P1.03, type: io, ck: true, alt: NFC2}
+  5: {name: P1.04, type: io, ck: true}
+  6: {name: P1.05, type: io}
+  7: {name: P1.06, type: io}
+  8: {name: P1.07, type: io}
+  9: {name: P1.08, type: io, ck: true}
+  10: {name: VDD, type: power}
+  11: {name: P2.00, type: io}
+  12: {name: P2.01, type: io, ck: true}
+  13: {name: P2.02, type: io}
+  14: {name: P2.03, type: io}
+  15: {name: P2.04, type: io}
+  16: {name: P2.05, type: io}
+  17: {name: P2.06, type: io, ck: true}
+  18: {name: P2.07, type: io}
+  19: {name: P2.08, type: io}
+  20: {name: P2.09, type: io}
+  21: {name: P2.10, type: io}
+  22: {name: VDD, type: power}
+  23: {name: P0.00, type: io}
+  24: {name: P0.01, type: io}
+  25: {name: SWDIO, type: debug}
+  26: {name: SWDCLK, type: debug}
+  27: {name: P0.02, type: io}
+  28: {name: P0.03, type: io, ck: true}
+  29: {name: P0.04, type: io, ck: true}
+  30: {name: nRESET, type: reset}
+  31: {name: ANT, type: rf}
+  32: {name: VSS_PA, type: ground}
+  33: {name: DECRF, type: power}
+  34: {name: XC1, type: crystal}
+  35: {name: XC2, type: crystal}
+  36: {name: VDD, type: power}
+  37: {name: P1.09, type: io}
+  38: {name: P1.10, type: io}
+  39: {name: P1.11, type: io, ck: true}
+  40: {name: P1.12, type: io, ck: true}
+  41: {name: P1.13, type: io}
+  42: {name: P1.14, type: io}
+  43: {name: DECA, type: power}
+  44: {name: VSS, type: ground}
+  45: {name: DECD, type: power}
+  46: {name: DCC, type: power}
+  47: {name: VDD, type: power}
+  48: {name: VDD, type: power}
+  49: {name: VSS, type: ground}
+# Placement rules that the schematic checks rely on:
+#   - PDM clock, SPI clock and I2C clock must be on a ck pin.
+#   - A peripheral's pins are all on one port. PDM uses port 1. The fast SPI (SPIM00)
+#     uses P2.01 SCK, P2.02 SDO, P2.04 SDI, P2.05 CSN.
+#   - Only ports 0 and 1 can wake the chip from System OFF.
+#   - DECRF must be connected to DECA; the exposed pad to ground.
