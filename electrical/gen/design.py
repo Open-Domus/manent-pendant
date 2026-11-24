@@ -142,7 +142,7 @@ FLASH = ic("SPI-NOR-8", "U", """
 
 # Which SoC pin does what. The checks in checks.py verify the clock-pin and port rules.
 SOC_NETS = {
-    "P0.00": "BTN_WAKE", "P0.01": "PMIC_INT", "P0.02": "I2C_SDA", "P0.03": "I2C_SCL", "P0.04": "LED_AUX",
+    "P0.01": "PMIC_INT", "P0.02": "I2C_SDA", "P0.03": "I2C_SCL", "P0.04": "LED_AUX",
     "P1.00/XL1": "XL1", "P1.01/XL2": "XL2",
     "P1.04": "PDM_CLK", "P1.05": "PDM_DIN", "P1.06": "MIC_A_THSEL", "P1.07": "MIC_A_WAKE",
     "P1.09": "MIC_B_THSEL", "P1.10": "MIC_B_WAKE",
@@ -150,7 +150,11 @@ SOC_NETS = {
     "P2.01": "SPI_SCK", "P2.02": "SPI_SDO", "P2.04": "SPI_SDI", "P2.05": "FLASH_CS",
 }
 
-UNVERIFIED_CAPS = "Value from Nordic's reference list; which net each capacitor sits on is not confirmed"
+# Nordic's reference layouts, opened as boards with KiCad's Altium importer on 2026-11-24, give the
+# net of every part: nPM1304-QEAA 1.0 configuration 2 ("one BUCK, LOADSW and LED", this circuit)
+# and nRF54L15-QFAA 0.8 configuration 1.
+PM_REF = "As Nordic's nPM1304-QEAA reference layout 1.0, configuration 2"
+SOC_REF = "As Nordic's nRF54L15-QFAA reference layout 0.8"
 
 
 def build() -> list[Component]:
@@ -174,27 +178,32 @@ def build() -> list[Component]:
 
     # ---- power (as on the ring) --------------------------------------------------------
     add(PMIC, "nPM1304", "power", by_name(PMIC, {
-        "VBUS": "VBUS", "VBUSOUT": "VBUSOUT", "CC1": "GND", "CC2": "GND", "VBAT": "VBAT", "NTC": "GND",
+        "VBUS": "VBUS", "VBUSOUT": "VBUSOUT", "CC1": "GND", "CC2": "GND", "VBAT": "VBAT", "NTC": "NTC",
         "VSYS": "VSYS", "PVDD": "VSYS", "VDDIO": "V1V8", "AVSS": "GND", "PVSS1": "GND", "PVSS2": "GND",
         "VSET1": "VSET1", "VSET2": "GND", "SHPHLD": "BTN_N", "SW1": "SW1", "VOUT1": "V1V8",
-        "VOUT2": "GND", "LSIN1": "V1V8", "LSOUT1": "VMIC", "LSIN2": "V1V8", "LSOUT2": "VFLASH",
+        "VOUT2": "VSYS", "LSIN1": "V1V8", "LSOUT1": "VMIC", "LSIN2": "V1V8", "LSOUT2": "VFLASH",
         "SCL": "I2C_SCL", "SDA": "I2C_SDA", "GPIO0": "PMIC_INT", "GPIO1": "MIC_EN",
     }), mpn="nPM1304-QEAA-R7", mfr="Nordic Semiconductor", package="QFN-32 5x5, 0.5 mm pitch",
         note="Charges at up to 100 mA: enough for these cells. "
-             "BUCK2 unused: VSET2 grounded as documented; SW2 open and VOUT2 grounded are not confirmed. "
-             "LED0-2, GPIO2-4 left open: not confirmed. NTC grounded: set DISABLENTC in firmware")
+             "BUCK2 unused as in Nordic's reference configuration 2: VSET2 grounded, SW2 open, VOUT2 to VSYS. "
+             "LED0-2, GPIO2-4 left open")
     add(L, "2.2uH", "power", ("SW1", "V1V8"), mpn="VLS201610HBX-2R2M-1", mfr="TDK", package="0806",
         note="Nordic asks for DCR under 0.4 ohm in 0806 (2.0 x 1.6 mm); this one is 0.17 max, 1.45 A, 1.0 tall. "
              "The same part on the band, the card and the pendant")
+    res("10k NTC", "NTC", "GND", "power", mpn="to choose",
+        note="Thermistor, B about 3380 K, against the cell: stops the charge when the closed case is too warm or too cold")
     res("47k", "VSET1", "GND", "power", note="Sets BUCK1 to 1.8 V at power-on")
-    cap("1uF 25V", "VBUS", "power", pkg="0603", note=UNVERIFIED_CAPS)
-    cap("1uF", "VBUSOUT", "power", note=UNVERIFIED_CAPS)
-    cap("10uF", "VBAT", "power", pkg="0603", note=UNVERIFIED_CAPS)
-    cap("10uF", "VSYS", "power", pkg="0603", note=UNVERIFIED_CAPS)
-    cap("10uF", "V1V8", "power", pkg="0603", note="Buck output: at least 4 uF effective")
+    cap("1uF 25V", "VBUS", "power", pkg="0603", note=PM_REF)
+    cap("1uF", "VBUSOUT", "power", note=PM_REF)
+    cap("2.2uF 16V X7R", "VBAT", "power", pkg="0603", note=PM_REF + " (Taiyo Yuden EMK107BB7225KA-T there)")
+    cap("10uF", "VSYS", "power", pkg="0603", note="Buck input, at PVDD and PVSS1. " + PM_REF)
+    cap("10uF", "VSYS", "power", pkg="0603", note="VSYS output. " + PM_REF)
+    cap("10uF", "V1V8", "power", pkg="0603", note="Buck output: at least 4 uF effective. " + PM_REF)
     cap("100nF", "V1V8", "power", note="VDDIO")
-    cap("1uF", "VMIC", "power", note="Load switch output; value to confirm")
-    cap("1uF", "VFLASH", "power", note="Load switch output; value to confirm")
+    cap("1uF", "VMIC", "power", note="Load switch output. " + PM_REF)
+    res("470k", "VMIC", "GND", "power",
+        note="Empties the rail when the load switch opens, so a mute puts the light out at once, as on the ring and the card")
+    cap("1uF", "VFLASH", "power", note="Load switch output. " + PM_REF)
     res("10k", "I2C_SCL", "V1V8", "power")
     res("10k", "I2C_SDA", "V1V8", "power")
     add(TVS, "5.5V bidirectional", "power", ("VBUS", "GND"), mpn="ESD230-B1-W0201", mfr="Infineon", package="0201")
@@ -223,32 +232,33 @@ def build() -> list[Component]:
     add(NFET, "N-MOSFET", "power", {"1": "PROT_CO", "2": "GND", "3": "FET_MID"}, mpn="PMZB290UNE2", mfr="Nexperia", package="DFN1006B-3", note="Charge FET")
 
     # ---- microcontroller and radio (Nordic QFAA reference circuit, configuration 1: DC/DC, no NFC) --
-    # The reference schematic is a picture: values and part numbers were read from its labels,
-    # which net each one sits on was not. The wiring below follows the ring's verified CSP circuit
-    # with the one difference the pin table states: DECRF is joined to DECA.
-    REF = "Value from Nordic's QFN48 reference; its place in the circuit is assumed from the CSP47 one"
+    REF = SOC_REF
     add(SOC, "nRF54L15", "mcu_rf", by_name(SOC, {
         "VDD": "V1V8", "DCC": "DCC", "DECD": "DECD", "DECA": "DECA", "DECRF": "DECA",
         "VSS": "GND", "VSS_PA": "GND", "XC1": "XC1", "XC2": "XC2", "ANT": "ANT",
-        "nRESET": "NRESET", "SWDCLK": "SWDCLK", "SWDIO": "SWDIO", **SOC_NETS,
+        "nRESET": "NRESET_PIN", "SWDCLK": "SWDCLK", "SWDIO": "SWDIO", **SOC_NETS,
     }), mpn="nRF54L15-QFAA-R", mfr="Nordic Semiconductor", package="QFN-48 6x6, 0.4 mm pitch",
         note="Pin 49 is the exposed pad: ground")
     cap("10uF", "V1V8", "mcu_rf", pkg="0603")
     for _ in range(4):
         cap("100nF", "V1V8", "mcu_rf", pkg="0201", note="One next to each side's VDD pin. " + REF)
-    add(L, "4.7uH", "mcu_rf", ("DCC", "DECD"), mpn="PLEA67BCA4R7M-1PT00", mfr="TDK", package="0402", note="DC/DC inductor. " + REF)
+    add(L, "4.7uH", "mcu_rf", ("DCC", "DECD"), mpn="PLEA67BCA4R7M-1PT00", mfr="TDK", package="0402",
+        note="DC/DC inductor, the ring's part. Nordic's QFN reference takes a 0603 of 0.65 ohm and 120 mA; this one is 1.08 ohm max")
     cap("2.2uF", "DECD", "mcu_rf", pkg="0201", note=REF)
-    add(FB, "ferrite bead", "mcu_rf", ("DECD", "DECA"), mpn="to choose", package="0201",
-        note="The reference gives no value; the ring uses 120 ohm at 100 MHz (BLM03AG121SN1D)")
+    add(FB, "120R@100MHz", "mcu_rf", ("DECD", "DECA"), mpn="BLM03AG121SN1D", mfr="Murata", package="0201",
+        note="The reference asks 120 ohm at 100 MHz, 200 mA, 0.5 ohm max: the ring's part")
     cap("2.2uF", "DECA", "mcu_rf", pkg="0201", note=REF)
     cap("10nF", "DECA", "mcu_rf", pkg="0201", note=REF)
+    cap("2.2nF", "DECA", "mcu_rf", pkg="0201", note="X7R. " + REF)
+    res("1k", "NRESET_PIN", "NRESET", "mcu_rf", pkg="0201", note="Filter on the reset pin, next to the antenna pin. " + REF)
+    cap("3.9pF", "NRESET_PIN", "mcu_rf", pkg="0201", note="C0G, at the reset pin. " + REF)
     add(XTAL4, "32MHz", "mcu_rf", {"1": "XC1", "3": "XC2", "2": "GND", "4": "GND"}, mpn="CX2016DB32000D0FLJCC", mfr="Kyocera", package="2016",
         note="2.0 x 1.6 mm, 8 pF, 10 ppm, as the reference asks (8 pF, 40 ppm in all); pads 2 and 4 are the lid, grounded: check against its drawing. "
              "Load capacitors are inside the chip")
     add(XTAL, "32.768kHz 9pF", "mcu_rf", ("XL1", "XL2"), mpn="9HT11-32.768KDZC-T", mfr="TXC", package="2012",
         note="Fitted, as on the band: the pendant stays connected for days and there is room. "
              "Load capacitors are inside the chip")
-    MATCH = "Matching network: part from the reference, order in the chain assumed"
+    MATCH = "Matching network. " + SOC_REF
     add(L, "2.7nH", "mcu_rf", ("ANT", "RF_A"), mpn="LQP03HQ2N7B02", mfr="Murata", package="0201", note=MATCH)
     cap("1.5pF", "RF_A", "mcu_rf", pkg="0201", mpn="GJM0335C1E1R5WB01", mfr="Murata", note=MATCH)
     add(L, "3.5nH", "mcu_rf", ("RF_A", "RF_B"), mpn="LQP03HQ3N5B02", mfr="Murata", package="0201", note=MATCH)
@@ -256,7 +266,7 @@ def build() -> list[Component]:
     add(L, "3.5nH", "mcu_rf", ("RF_B", "RF_50"), mpn="LQP03HQ3N5B02", mfr="Murata", package="0201", note=MATCH)
     res("0", "RF_50", "ANT_FEED", "mcu_rf", pkg="0201",
         note="Antenna tuning, series: value from measurement in a closed case, inside its metal rim, on a chest")
-    cap("tune", "RF_50", "mcu_rf", pkg="0201", dnp=True, note="Antenna tuning, shunt")
+    cap("0.3pF", "RF_50", "mcu_rf", pkg="0201", note="C0G, 0.1 pF tolerance: the last part of the matching network. " + SOC_REF)
     cap("tune", "ANT_FEED", "mcu_rf", pkg="0201", dnp=True, note="Antenna tuning, shunt")
     add(ANT, "2.4 GHz", "mcu_rf", ("ANT_FEED",), mpn="ANT1608LL14R2400A", mfr="Yageo", package="1608 chip antenna",
         note="Chip antenna or printed trace at the edge of the board; decided with the first radio measurements")
@@ -285,9 +295,8 @@ def build() -> list[Component]:
 
     # ---- button, light, pads ---------------------------------------------------------------
     add(SW, "tactile, side push", "ui", ("BTN_N", "GND"), mpn="EVQP7J01P", mfr="Panasonic", package="side-push 3.5x2.9x1.35",
-        note="The card's switch. Under the board, at its edge: a pusher in the rim presses it. Pulled up inside the PMIC (SHPHLD)")
-    add(D, "Schottky", "ui", ("BTN_N", "BTN_WAKE"), mpn="RB521ZS-30", mfr="Rohm", package="0201",
-        note="Pin 1 is the cathode. Anode at the SoC: keeps the PMIC pull-up voltage off the 1.8 V pin")
+        note="The card's switch. Under the board, at its edge: a pusher in the rim presses it. Pulled up inside the PMIC (SHPHLD). "
+             "The SoC learns of presses from the PMIC interrupt, as on the ring")
     add(LED, "red", "ui", ("LED_K", "VSYS"), mpn="SML-P11VT", mfr="Rohm", package="1.0x0.6x0.2",
         note="Pin 1 is the cathode. Under the stone: it lights the whole cabochon from inside. "
              "This is the red one; the green and blue pendants take an LED of their colour in the same package, to choose")
@@ -300,6 +309,8 @@ def build() -> list[Component]:
         note="Firmware can only add light, never remove the steady glow")
     res("100k", "LED_AUX", "GND", "ui", note="Bright light off while the SoC is in reset")
     for label, net in (("SWDIO", "SWDIO"), ("SWDCLK", "SWDCLK")):
+        add(TVS, "5.5V bidirectional", "ui", (net, "GND"), mpn="ESD230-B1-W0201", mfr="Infineon", package="0201",
+            note="The pad is on the outside of the closed case, against the skin: protected as on the card")
         add(CONTACT, label, "ui", (net,), mpn="to choose", package="spring contact",
             note="Service pad on the back cover: reachable with the case closed")
     for label, net in (("nRESET", "NRESET"), ("UART TX", "UART_TX"), ("UART RX", "UART_RX"), ("1V8", "V1V8"),

@@ -138,8 +138,8 @@ back pads --springs--TVS-- VBUS --> [ nPM1304 ] <--> cell (+ protection)
                         1.8 V buck --+  |  +-- load switch 2 --> flash supply
                                      |  +----- load switch 1 --> microphone supply --> glow
                                      v
-   pusher --+--> SHPHLD          [ nRF54L15 ] --PDM--> microphone A, microphone B
-            +-|<|-> wake            |  |  |
+   pusher -----> SHPHLD          [ nRF54L15 ] --PDM--> microphone A, microphone B
+                                    |  |  |
                                SPI --+  |  +-- matching -- tuning -- antenna
                                 v       +-- bright light
                           512 Mbit flash
@@ -158,12 +158,20 @@ The band's, with one change: the switch.
 | Switch | Panasonic EVQP7J01P, side push, the card's part | 3.5 x 2.9 x 1.35 | verified from the catalogue, as for the card |
 | Light | Rohm SML-P11VT (red); green and blue parts to choose | 1.0 x 0.6 x 0.2 | red: verified at 1 mA, dimmer is from curves; the others: nothing read yet |
 | Cell protection | ABLIC S-82A1A | 1.4 x 1.4 | verified |
-| Charging input | Infineon ESD230-B1-W0201 | 0.58 x 0.28 | verified |
+| Charging input, service pads | 3 x Infineon ESD230-B1-W0201 | 0.58 x 0.28 | verified |
+| Cell temperature | 10 k thermistor, B about 3380 K | 0402 | part not chosen |
 | Cell | flat LiPo pouch, 401525 class | 25 x 15 x 4 | trade size code; capacity estimated |
 
 The full list with part numbers is `electrical/out/bom.csv`. Why each part was chosen, the
 microcontroller pin table and the rules the build enforces on it are in the band's design
-document and hold here unchanged: `electrical/gen/checks.py` is the same file.
+document and hold here unchanged: `electrical/gen/checks.py` is the same file. So does the
+comparison with Nordic's reference layouts, which on 2026-11-24 corrected seven points of
+both circuits (the reset filter, a DECA capacitor, the last matching capacitor, the ferrite
+bead, the unused buck output, the cell and VSYS capacitors), and the three parts the band
+took from the ring and the card at the same time: a thermistor against the cell, 470 k that
+empties the microphone rail on a mute, and protection diodes on the two service pads. The
+button now reaches the microcontroller only through the power chip's interrupt, as on the
+ring.
 
 ## Case and assembly
 

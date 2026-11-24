@@ -30,6 +30,7 @@ ALWAYS = [   # drawn in both states
     ("cell", "Bluetooth link kept alive", 0.010, 0.015, 0.030, "estimate"),
     ("cell", "Power chip itself", 0.001, 0.002, 0.005, "estimate"),
     ("cell", "Steady glow, 0.03 / 0.05 / 0.1 mA", 0.03, 0.05, 0.1, "design choice"),
+    ("rail", "Bleed resistor on the microphone rail, 470 k at 1.8 V", 0.0069, 0.0069, 0.0069, "calculated"),
 ]
 UPLOAD_MAH_PER_RECORDED_HOUR = 0.19   # 7.2 MB at an assumed 400 kbit/s
 DAYS = {"quiet": 0.15, "typical": 0.25, "noisy": 0.50}   # share of the 24 hours with sound worth recording

@@ -28,6 +28,12 @@ GAP = 0.35            # between the land patterns of two parts
 FANOUT = {"nRF54L15": (0.9, 1.5, 0.9, 0.9), "nPM1304": (0.9, 0.9, 0.9, 0.9)}
 STEP = 0.05
 REACH = 9.0           # how far from its pads a part may end up
+# Room for tracks: a part pays this many millimetres of distance for each part already within
+# CROWD_MARGIN of it, so small parts spread into free board instead of packing into one corner
+# where the router then cannot pass. Without it the cell-protection corner did not route.
+# Parts on the nets that must be short, and the small decoupling capacitors, stay tight.
+CROWD_WEIGHT = 0.4
+CROWD_MARGIN = 0.5
 GROUND = {"GND", "CELL_N"}
 # Nets that must be as short as they can be: the parts on them choose their place first.
 SHORTEST = {"ANT", "RF_A", "RF_B", "RF_50", "ANT_FEED", "XC1", "XC2", "XL1", "XL2", "DCC", "SW1"}
@@ -176,12 +182,22 @@ def place(comps, case):
         x0, y0, x1, y1 = x - w / 2 - GAP, y - h / 2 - GAP, x + w / 2 + GAP, y + h / 2 + GAP
         return not any(x0 < b[2] and b[0] < x1 and y0 < b[3] and b[1] < y1 for b in blocked)
 
+    def crowd(x, y, w, h):
+        m = GAP + CROWD_MARGIN
+        x0, y0, x1, y1 = x - w / 2 - m, y - h / 2 - m, x + w / 2 + m, y + h / 2 + m
+        return sum(x0 < b[2] and b[0] < x1 and y0 < b[3] and b[1] < y1 for b in blocked)
+
     def targets(c):
         """For each pin worth pulling on, the pad it should end up next to."""
         out = {}
         for num, net in c.nets.items():
             if not net or net in GROUND or net not in pads:
                 continue
+            if c.sym.name == "TVS":            # a protection diode belongs at the pad it protects
+                at_pad = [q for q in pads[net] if by_ref[q[2]].sym.name == "CONTACT"]
+                if at_pad:
+                    out[num] = at_pad[0]
+                    continue
             same = [q for q in pads[net] if by_ref[q[2]].sheet == c.sheet] or pads[net]
             chips = [q for q in same if len(by_ref[q[2]].sym.pins) > 2] or same
             out[num] = min(chips, key=lambda q: claims.get((net, q[:2]), 0))
@@ -202,17 +218,22 @@ def place(comps, case):
         fp = footprint_of(c)
         cx = sum(q[0] for q in want.values()) / len(want)
         cy = sum(q[1] for q in want.values()) / len(want)
+        spread = CROWD_WEIGHT if not any(urgency((c, want))[:2]) else 0.0
+        turned = {rot: {num: turn(px, py, rot) for num, px, py, _, _ in pads_of(fp)} for rot in (0, 90, 180, 270)}
         best = None
-        n = int(REACH / STEP)
-        for rot in (0, 90, 180, 270):
-            w, h = size(fp, rot)
-            local = {num: turn(px, py, rot) for num, px, py, _, _ in pads_of(fp)}
-            for i in range(-n, n + 1):
-                for j in range(-n, n + 1):
-                    x, y = cx + i * STEP, cy + j * STEP
-                    cost = sum(math.hypot(x + local[num][0] - q[0], y + local[num][1] - q[1]) for num, q in want.items())
-                    if (best is None or cost < best[0]) and free(x, y, w, h):
-                        best = (cost, x, y, rot)
+        for reach in (REACH, 2 * REACH):          # farther only if nothing is free near
+            if best:
+                break
+            n = int(reach / STEP)
+            for rot, i, j in ((r, i, j) for r in (0, 90, 180, 270) for i in range(-n, n + 1) for j in range(-n, n + 1)):
+                w, h = size(fp, rot)
+                x, y = cx + i * STEP, cy + j * STEP
+                cost = sum(math.hypot(x + turned[rot][num][0] - q[0], y + turned[rot][num][1] - q[1]) for num, q in want.items())
+                if (best is not None and cost >= best[0]) or not free(x, y, w, h):
+                    continue
+                cost += spread * crowd(x, y, w, h) if spread else 0.0
+                if best is None or cost < best[0]:
+                    best = (cost, x, y, rot)
         assert best, f"no room for {c.ref}"
         _, x, y, rot = best
         placed[c.ref] = (round(x, 3), round(y, 3), "F", rot)

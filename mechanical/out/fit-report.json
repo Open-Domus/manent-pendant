@@ -50,9 +50,9 @@
     "board": 687.3,
     "large_parts_and_keepouts": 172.3,
     "free": 515.0,
-    "small_parts": 52,
-    "small_parts_need": 45.7,
-    "share_of_free": 0.09
+    "small_parts": 59,
+    "small_parts_need": 50.2,
+    "share_of_free": 0.1
    },
    "mic_distance": 32.9,
    "mass": {
@@ -345,9 +345,9 @@
     "board": 878.8,
     "large_parts_and_keepouts": 172.3,
     "free": 706.5,
-    "small_parts": 52,
-    "small_parts_need": 45.7,
-    "share_of_free": 0.06
+    "small_parts": 59,
+    "small_parts_need": 50.2,
+    "share_of_free": 0.07
    },
    "mic_distance": 34.9,
    "mass": {

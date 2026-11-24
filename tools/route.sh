@@ -14,7 +14,7 @@ while [ "$attempt" -lt "${1:-8}" ]; do
   attempt=$((attempt + 1))
   "$here/kicad.sh" place > /dev/null
   "$here/kicad.sh" py gen/pcb_route.py export > /dev/null
-  (cd "$out" && java ${JAVA_OPTS:--Xmx2g} -jar "$JAR" -de pendant.dsn -dr pendant.rules -do pendant.ses -mp 80 --gui.enabled=false > route.log 2>&1)
+  (cd "$out" && java ${JAVA_OPTS:--Xmx2g} -jar "$JAR" -de pendant.dsn -dr pendant.rules -do pendant.ses -mp ${PASSES:-80} --gui.enabled=false > route.log 2>&1)
   router="$(grep 'Auto-routing stage completed' "$out/route.log" | grep -o '([0-9]* unrouted and [0-9]* violations*)' | tail -1)"
   "$here/kicad.sh" py gen/pcb_route.py import out/pendant.ses > /dev/null
   "$here/kicad.sh" check > /dev/null
